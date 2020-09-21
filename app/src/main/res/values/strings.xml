@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SoldierDeploymentAutomation</string>
+    <string name="tr_enter_soldier_name">İsim giriniz…</string>
+    <string name="tr_add_soldier_name">İsim Ekle</string>
+    <string name="tr_add_city">Şehir Ekle</string>
+    <string name="tr_enter_city_name">Şehir giriniz…</string>
+    <string name="tr_deploy">Dağıt</string>
+    <string name="tr_app_name">Asker Dağıtım Otomasyonu</string>
+    <string name="tr_dark_theme">Koyu Tema</string>
+    <string name="tr_blank_area_error_message">Lütfen isim alanını doldurunuz!</string>
+    <string name="tr_adding_soldier_success_message">Asker ekleme başarılı!</string>
+    <string name="tr_adding_city_success_message">Şehir ekleme işlemi başarılı!</string>
+    <string name="tr_empty_list_deployment_error_message">Boş dağıtım yapılamaz!</string>
+</resources>
