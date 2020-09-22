@@ -35,13 +35,13 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog_negative"
             style="@style/btn_dialog_type"
-            android:text="@string/tr_general_no"
+            android:text="@string/tr_general_cancel"
             />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog_positive"
             style="@style/btn_dialog_type"
-            android:text="@string/tr_general_yes"
+            android:text="@string/tr_general_ok"
             />
 
 

@@ -21,9 +21,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -105,8 +105,10 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         btnAddSoldier.setOnClickListener(view -> addSoldier(Objects.requireNonNull(edtName.getText()).toString()));
         btnAddCity.setOnClickListener(view -> addCity(Objects.requireNonNull(edtCity.getText()).toString()));
         btnDeployment.setOnClickListener(view -> {
-            if (soldiers.size() > 0 && cities.size() > 0) deploySoldiers();
-            else
+            if (soldiers.size() > 0 && cities.size() > 0) {
+                deploySoldiers();
+
+            } else
                 showDialog(RecyclerViewType.DEPLOYMENT, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_empty_list_deployment_error_message));
         });
         edtKeyListeners();
@@ -156,58 +158,113 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     }
 
     private void deploySoldiersRandom() {
+
         deploymentList = new ArrayList<>();
-        while (0 >= soldiers.size()) {
-            int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
-            int randomCityIndex = new Random().nextInt(cities.size() - 1);
+        List<Integer> randomCityIndexList = new ArrayList<>();
+        List<Integer> randomSoldierIndexList = new ArrayList<>();
+        for (int i = 0; i < cities.size(); i++) {
+            randomCityIndexList.add(i);
+        }
+        Collections.shuffle(randomCityIndexList);
+        for (int j = 0; j < soldiers.size(); j++) {
+            randomSoldierIndexList.add(j);
+        }
+        Collections.shuffle(randomSoldierIndexList);
+
+        for (int z = 0; z < soldiers.size(); z++) {
+            int randomSoldierIndex = randomSoldierIndexList.get(0);
+            int randomCityIndex = randomCityIndexList.get(0);
             deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
             deploymentList.add(deployment);
-            soldiers.remove(randomSoldierIndex);
-            cities.remove(randomCityIndex);
-            notifyAdapter();
+            randomCityIndexList.remove(0);
+            randomSoldierIndexList.remove(0);
         }
+
+        adapterDeployment = new AdapterDeployment(deploymentList, this);
+        recyclerViewDeployment.setAdapter(adapterDeployment);
     }
 
     private void deploySoldierByEquivalent() {
         deploymentList = new ArrayList<>();
         int loopSize = soldiers.size() / cities.size();
-        int period = cities.size();
-        int i = 0;
-        List<City> tempCityList = new ArrayList<>();
-
-        while (i <= period) {
-            while (0 >= loopSize) {
-                if (cities.size() == 0) {
-                    int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
-                    int randomCityIndex = new Random().nextInt(tempCityList.size() - 1);
-                    cities.add(tempCityList.get(randomCityIndex));
-                    deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(tempCityList.get(randomCityIndex).getName()));
-                    deploymentList.add(deployment);
-                    cities.remove(randomSoldierIndex);
-                    tempCityList.remove(randomCityIndex);
-                    notifyAdapter();
-
-                } else {
-                    int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
-                    int randomCityIndex = new Random().nextInt(cities.size() - 1);
-                    tempCityList.add(cities.get(randomCityIndex));
-                    deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
-                    deploymentList.add(deployment);
-                    soldiers.remove(randomSoldierIndex);
-                    cities.remove(randomCityIndex);
-                    notifyAdapter();
-                }
-                loopSize--;
+        List<Integer> randomCityIndexList = new ArrayList<>();
+        List<Integer> randomSoldierIndexList = new ArrayList<>();
+        for (int a = 0; a < loopSize; a++) {
+            for (int i = 0; i < cities.size() - 1; i++) {
+                randomCityIndexList.add(i);
             }
-            i++;
         }
+        for (int z = 0; z < soldiers.size() - 1; z++) {
+            randomSoldierIndexList.add(z);
+        }
+
+        Collections.shuffle(randomCityIndexList);
+        Collections.shuffle(randomSoldierIndexList);
+
+        // after that city index list size will equals soldiers list size.
+        //now we can pick index 0 from random numbers list for deploy randomly.
+
+        for (int j = 0; j < soldiers.size(); j++) {
+            int randomSoldierIndex = randomSoldierIndexList.get(0);
+            int randomCityIndex = randomCityIndexList.get(0);
+            deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
+            deploymentList.add(deployment);
+            randomCityIndexList.remove(0);
+            randomSoldierIndexList.remove(0);
+        }
+
+        adapterDeployment = new AdapterDeployment(deploymentList, this);
+        recyclerViewDeployment.setAdapter(adapterDeployment);
+        soldiers = new ArrayList<>();
+        cities = new ArrayList<>();
+        notifyAdapter();
     }
 
     private void deploySoldiersLogical() {
-        //  deploymentList = new ArrayList<>();
-        //  while (0 >= soldiers.size()) {
-        //  }
-        // todo: tomorrow...
+
+        deploymentList = new ArrayList<>();
+        List<Integer> randomCityIndexList = new ArrayList<>();
+        List<Integer> randomSoldierIndexList = new ArrayList<>();
+
+        int loopSize = soldiers.size() / cities.size();
+        int remaining = soldiers.size() % cities.size();
+
+        for (int i = 0; i < loopSize; i++) {
+            for (int j = 0; j < cities.size(); j++) {
+                randomCityIndexList.add(j);
+            }
+        }
+
+        for (int z = 0; z < remaining; z++) {
+            randomCityIndexList.add(z);
+        }
+
+        for (int x = 0; x < soldiers.size(); x++) {
+            randomSoldierIndexList.add(x);
+        }
+
+        Collections.shuffle(randomCityIndexList);
+        Collections.shuffle(randomSoldierIndexList);
+
+
+        // after that city index list size will equals soldiers list size.
+        //now we can pick index 0 from random numbers list for deploy randomly.
+
+        for (int loop = 0; loop < soldiers.size(); loop++) {
+            int randomSoldierIndex = randomSoldierIndexList.get(0);
+            int randomCityIndex = randomCityIndexList.get(0);
+            deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
+            deploymentList.add(deployment);
+            randomCityIndexList.remove(0);
+            randomSoldierIndexList.remove(0);
+        }
+
+        adapterDeployment = new AdapterDeployment(deploymentList, this);
+        recyclerViewDeployment.setAdapter(adapterDeployment);
+        soldiers = new ArrayList<>();
+        cities = new ArrayList<>();
+        notifyAdapter();
+
     }
 
     private void notifyAdapter() {
