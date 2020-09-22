@@ -6,7 +6,6 @@ import android.view.KeyEvent;
 import com.cevdet.soldierdeploymentautomation.R;
 import com.cevdet.soldierdeploymentautomation.enums.DialogType;
 import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
-import com.cevdet.soldierdeploymentautomation.helper.HelperFunction;
 import com.cevdet.soldierdeploymentautomation.listeners.DialogCallBack;
 import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.City;
@@ -117,7 +116,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
 
     private void addSoldier(String name) {
-        if (HelperFunction.isStringEmpty(name))
+        if (name.trim().isEmpty())
             showDialog(RecyclerViewType.SOLDIER, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_blank_area_error_message));
         else {
             soldier = new Soldier(name);
@@ -130,7 +129,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     }
 
     private void addCity(String cityName) {
-        if (HelperFunction.isStringEmpty(cityName))
+        if (cityName.trim().isEmpty())
             showDialog(RecyclerViewType.CITY, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_blank_area_error_message));
 
         else {
@@ -253,7 +252,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 switch (i) {
                     case KeyEvent.KEYCODE_ENTER:
-                        addSoldier(Objects.requireNonNull(edtName.getText()).toString());
+                        if (edtName.getText() != null) addSoldier(edtName.getText().toString());
                         break;
                     case KeyEvent.FLAG_CANCELED_LONG_PRESS:
                         break;
@@ -266,7 +265,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 switch (i) {
                     case KeyEvent.KEYCODE_ENTER:
-                        addCity(Objects.requireNonNull(edtCity.getText()).toString());
+                        if (edtCity.getText() != null) addCity(edtCity.getText().toString());
                         break;
                     case KeyEvent.FLAG_CANCELED_LONG_PRESS:
                         break;
