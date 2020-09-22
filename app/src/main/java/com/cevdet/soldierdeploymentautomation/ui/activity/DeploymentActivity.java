@@ -190,11 +190,11 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         List<Integer> randomCityIndexList = new ArrayList<>();
         List<Integer> randomSoldierIndexList = new ArrayList<>();
         for (int a = 0; a < loopSize; a++) {
-            for (int i = 0; i < cities.size() - 1; i++) {
+            for (int i = 0; i < cities.size(); i++) {
                 randomCityIndexList.add(i);
             }
         }
-        for (int z = 0; z < soldiers.size() - 1; z++) {
+        for (int z = 0; z < soldiers.size(); z++) {
             randomSoldierIndexList.add(z);
         }
 
@@ -215,9 +215,6 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
         adapterDeployment = new AdapterDeployment(deploymentList, this);
         recyclerViewDeployment.setAdapter(adapterDeployment);
-        soldiers = new ArrayList<>();
-        cities = new ArrayList<>();
-        notifyAdapter();
     }
 
     private void deploySoldiersLogical() {
@@ -261,16 +258,6 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
         adapterDeployment = new AdapterDeployment(deploymentList, this);
         recyclerViewDeployment.setAdapter(adapterDeployment);
-        soldiers = new ArrayList<>();
-        cities = new ArrayList<>();
-        notifyAdapter();
-
-    }
-
-    private void notifyAdapter() {
-        adapterCity.notifyDataSetChanged();
-        adapterSoldier.notifyDataSetChanged();
-        adapterDeployment.notifyDataSetChanged();
     }
 
 

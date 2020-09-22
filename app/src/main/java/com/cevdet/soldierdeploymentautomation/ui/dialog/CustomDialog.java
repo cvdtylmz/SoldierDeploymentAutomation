@@ -84,11 +84,11 @@ public class CustomDialog extends Dialog {
         switch (dialogType) {
             case SUCCESS:
                 imgDialog.setImageResource(R.drawable.ic_success);
-                btnDialogPositive.setVisibility(View.GONE);
+                btnDialogNegative.setVisibility(View.GONE);
                 break;
             case ERROR:
                 imgDialog.setImageResource(R.drawable.ic_error);
-                btnDialogPositive.setVisibility(View.GONE);
+                btnDialogNegative.setVisibility(View.GONE);
                 break;
             case QUESTION:
                 imgDialog.setImageResource(R.drawable.ic_question);
