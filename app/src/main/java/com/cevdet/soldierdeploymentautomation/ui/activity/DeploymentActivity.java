@@ -2,6 +2,7 @@ package com.cevdet.soldierdeploymentautomation.ui.activity;
 
 
 import android.view.KeyEvent;
+import android.widget.ImageView;
 
 import com.cevdet.soldierdeploymentautomation.R;
 import com.cevdet.soldierdeploymentautomation.enums.DialogType;
@@ -36,6 +37,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
     MaterialButton btnAddSoldier, btnAddCity, btnDeployment;
 
+    ImageView imgBack;
 
     TextInputEditText edtName, edtCity;
 
@@ -67,6 +69,8 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         btnAddSoldier = findViewById(R.id.btn_add_soldier);
         btnAddCity = findViewById(R.id.btn_add_city);
         btnDeployment = findViewById(R.id.btn_deploy_soldier);
+
+        imgBack = toolbar.findViewById(R.id.toolbar_image_view);
 
 
         edtName = findViewById(R.id.edt_enter_soldier_name);
@@ -110,6 +114,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
             } else
                 showDialog(RecyclerViewType.DEPLOYMENT, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_empty_list_deployment_error_message));
         });
+        imgBack.setOnClickListener(view -> onBackPressed());
         edtKeyListeners();
 
     }

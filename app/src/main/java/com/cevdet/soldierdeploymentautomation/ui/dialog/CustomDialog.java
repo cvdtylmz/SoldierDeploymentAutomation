@@ -69,8 +69,16 @@ public class CustomDialog extends Dialog {
             if (this.isShowing()) this.dismiss();
         });
         btnDialogPositive.setOnClickListener(view -> {
-            listener.delete(recyclerViewType, adapterPosition);
-            if (this.isShowing()) this.dismiss();
+            switch (dialogType) {
+                case QUESTION:
+                    listener.delete(recyclerViewType, adapterPosition);
+                    if (this.isShowing()) this.dismiss();
+                    break;
+                case ERROR:
+                case SUCCESS:
+                    if (this.isShowing()) this.dismiss();
+                    break;
+            }
         });
     }
 
