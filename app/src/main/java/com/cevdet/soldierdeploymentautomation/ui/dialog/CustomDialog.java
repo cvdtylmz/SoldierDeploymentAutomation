@@ -64,7 +64,6 @@ public class CustomDialog extends Dialog {
     }
 
     private void btnListener() {
-        //test
 
         btnDialogNegative.setOnClickListener(view -> {
             if (this.isShowing()) this.dismiss();

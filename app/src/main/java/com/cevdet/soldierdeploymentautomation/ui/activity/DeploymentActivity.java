@@ -143,18 +143,9 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     }
 
     private void deploySoldiers() {
-        if (soldiers.size() % cities.size() == soldiers.size()) {
-            // then cities number > soldiers
-            deploySoldiersRandom();
-        }
-        if (soldiers.size() % cities.size() == 0) {
-            // then we can deploy them equal (cities could be multiple soldier) recursive
-            deploySoldierByEquivalent();
-        }
-        if (soldiers.size() % cities.size() > 0) {
-            // then soldiers not equal check list of deployment size's
-            deploySoldiersLogical();
-        }
+        if (soldiers.size() % cities.size() == soldiers.size()) deploySoldiersRandom();
+        if (soldiers.size() % cities.size() == 0) deploySoldierByEquivalent();
+        if (soldiers.size() % cities.size() > 0) deploySoldiersLogical();
     }
 
     private void deploySoldiersRandom() {
@@ -242,10 +233,6 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
         Collections.shuffle(randomCityIndexList);
         Collections.shuffle(randomSoldierIndexList);
-
-
-        // after that city index list size will equals soldiers list size.
-        //now we can pick index 0 from random numbers list for deploy randomly.
 
         for (int loop = 0; loop < soldiers.size(); loop++) {
             int randomSoldierIndex = randomSoldierIndexList.get(0);
