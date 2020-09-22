@@ -23,13 +23,13 @@ import androidx.annotation.NonNull;
 public class CustomDialog extends Dialog {
     private DialogType dialogType;
     private String message;
-    private MaterialButton btnDialogNegative,btnDialogPositive;
+    private MaterialButton btnDialogNegative, btnDialogPositive;
     private DialogCallBack listener;
     private RecyclerViewType recyclerViewType;
     private int adapterPosition;
 
 
-    public CustomDialog(@NonNull Context context, RecyclerViewType recyclerViewType,DialogCallBack listener,DialogType dialogType, int adapterPosition,String message) {
+    public CustomDialog(@NonNull Context context, RecyclerViewType recyclerViewType, DialogCallBack listener, DialogType dialogType, int adapterPosition, String message) {
         super(context);
         this.message = message;
         this.dialogType = dialogType;
@@ -44,15 +44,15 @@ public class CustomDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_dialog);
 
-        if (this.getWindow() != null){
-           setDialog();
-           switchType();
-           btnListener();
+        if (this.getWindow() != null) {
+            setDialog();
+            switchType();
+            btnListener();
         }
 
     }
 
-    private void setDialog () {
+    private void setDialog() {
         Objects.requireNonNull(this.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -60,10 +60,10 @@ public class CustomDialog extends Dialog {
         int height = displayMetrics.heightPixels;
         width = (width / 10) * 7;
         height = (height / 10) * 5;
-        this.getWindow().setLayout(width,height);
+        this.getWindow().setLayout(width, height);
     }
 
-    private void btnListener () {
+    private void btnListener() {
         //test
 
         btnDialogNegative.setOnClickListener(view -> {
@@ -75,7 +75,7 @@ public class CustomDialog extends Dialog {
         });
     }
 
-    private void switchType () {
+    private void switchType() {
         btnDialogNegative = findViewById(R.id.btn_dialog_negative);
         btnDialogPositive = findViewById(R.id.btn_dialog_positive);
         TextView txtDialog = findViewById(R.id.txt_dialog);

@@ -25,8 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initViews();
 
-    protected void showDialog (RecyclerViewType recyclerViewType, DialogCallBack listener,DialogType dialogType,int position, String message) {
-        dialog =  new CustomDialog(this,recyclerViewType,listener, dialogType,position,message);
+    protected void showDialog(RecyclerViewType recyclerViewType, DialogCallBack listener, DialogType dialogType, int position, String message) {
+        dialog = new CustomDialog(this, recyclerViewType, listener, dialogType, position, message);
         dialog.setCanceledOnTouchOutside(false);
         if (!dialog.isShowing()) dialog.show();
     }

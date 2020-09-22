@@ -4,7 +4,7 @@ public class Soldier {
     private String name;
     private City city;
 
-    public Soldier () {
+    public Soldier() {
 
     }
 

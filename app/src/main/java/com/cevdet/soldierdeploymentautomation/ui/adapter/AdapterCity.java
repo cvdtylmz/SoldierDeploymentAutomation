@@ -10,7 +10,6 @@ import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
 import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.City;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -38,7 +37,7 @@ public class AdapterCity extends RecyclerView.Adapter<AdapterCity.AdapterCityVie
     public void onBindViewHolder(@NonNull AdapterCityViewHolder holder, int position) {
         City city = data.get(position);
         holder.setData(city);
-        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.CITY,position));
+        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.CITY, position));
     }
 
     @Override

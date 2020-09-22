@@ -1,8 +1,7 @@
 package com.cevdet.soldierdeploymentautomation.ui.activity;
 
-import android.app.Dialog;
+
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.cevdet.soldierdeploymentautomation.R;
 import com.cevdet.soldierdeploymentautomation.enums.DialogType;
@@ -26,8 +25,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,15 +33,13 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
 
     MaterialToolbar toolbar;
 
-    RecyclerView recyclerViewSoldier,recyclerViewCity,recyclerViewDeployment;
+    RecyclerView recyclerViewSoldier, recyclerViewCity, recyclerViewDeployment;
 
-    MaterialButton btnAddSoldier,btnAddCity,btnDeployment;
-
-
-    TextInputEditText edtName,edtCity;
+    MaterialButton btnAddSoldier, btnAddCity, btnDeployment;
 
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
+    TextInputEditText edtName, edtCity;
+
 
     AdapterSoldier adapterSoldier;
     AdapterCity adapterCity;
@@ -57,8 +52,6 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     List<Soldier> soldiers = new ArrayList<>();
     List<City> cities = new ArrayList<>();
     List<Deployment> deploymentList = new ArrayList<>();
-
-
 
 
     @Override
@@ -81,14 +74,13 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         edtCity = findViewById(R.id.edt_city_name);
 
 
-
         recyclerViewSoldier = findViewById(R.id.rv_soldier);
         recyclerViewCity = findViewById(R.id.rv_city);
         recyclerViewDeployment = findViewById(R.id.rv_deployment);
 
 
-        adapterSoldier = new AdapterSoldier(soldiers,this);
-        adapterCity = new AdapterCity(cities,this);
+        adapterSoldier = new AdapterSoldier(soldiers, this);
+        adapterCity = new AdapterCity(cities, this);
         adapterDeployment = new AdapterDeployment(deploymentList, this);
 
         // prevent recyclerview skipping layout.
@@ -109,64 +101,66 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         listeners();
     }
 
-    private void listeners () {
+    private void listeners() {
         btnAddSoldier.setOnClickListener(view -> addSoldier(Objects.requireNonNull(edtName.getText()).toString()));
         btnAddCity.setOnClickListener(view -> addCity(Objects.requireNonNull(edtCity.getText()).toString()));
         btnDeployment.setOnClickListener(view -> {
-            if (soldiers.size() > 0 && cities.size() > 0)  deploySoldiers();
-            else showDialog(RecyclerViewType.DEPLOYMENT,this,DialogType.ERROR,-1,getResources().getString(R.string.tr_empty_list_deployment_error_message));
+            if (soldiers.size() > 0 && cities.size() > 0) deploySoldiers();
+            else
+                showDialog(RecyclerViewType.DEPLOYMENT, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_empty_list_deployment_error_message));
         });
         edtKeyListeners();
 
     }
 
 
-
     private void addSoldier(String name) {
-        if (HelperFunction.isStringEmpty(name)) showDialog(RecyclerViewType.SOLDIER,this,DialogType.ERROR,-1,getResources().getString(R.string.tr_blank_area_error_message));
+        if (HelperFunction.isStringEmpty(name))
+            showDialog(RecyclerViewType.SOLDIER, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_blank_area_error_message));
         else {
             soldier = new Soldier(name);
             soldiers.add(soldier);
-            adapterSoldier = new AdapterSoldier(soldiers,this);
+            adapterSoldier = new AdapterSoldier(soldiers, this);
             recyclerViewSoldier.setAdapter(adapterSoldier);
-            showDialog(RecyclerViewType.SOLDIER,this,DialogType.SUCCESS,-1,getResources().getString(R.string.tr_adding_soldier_success_message));
+            showDialog(RecyclerViewType.SOLDIER, this, DialogType.SUCCESS, -1, getResources().getString(R.string.tr_adding_soldier_success_message));
         }
 
     }
 
-    private void addCity (String cityName) {
-        if (HelperFunction.isStringEmpty(cityName)) showDialog(RecyclerViewType.CITY,this,DialogType.ERROR,-1,getResources().getString(R.string.tr_blank_area_error_message));
+    private void addCity(String cityName) {
+        if (HelperFunction.isStringEmpty(cityName))
+            showDialog(RecyclerViewType.CITY, this, DialogType.ERROR, -1, getResources().getString(R.string.tr_blank_area_error_message));
 
         else {
             city = new City(cityName);
             cities.add(city);
-            adapterCity = new AdapterCity(cities,this);
+            adapterCity = new AdapterCity(cities, this);
             recyclerViewCity.setAdapter(adapterCity);
-            showDialog(RecyclerViewType.CITY,this,DialogType.SUCCESS,-1,getResources().getString(R.string.tr_adding_city_success_message));
+            showDialog(RecyclerViewType.CITY, this, DialogType.SUCCESS, -1, getResources().getString(R.string.tr_adding_city_success_message));
         }
     }
 
-    private void deploySoldiers () {
-            if (soldiers.size() % cities.size()  == soldiers.size()) {
-                // then cities number > soldiers
-                deploySoldiersRandom();
-            }
-            if (soldiers.size() % cities.size() == 0) {
-                // then we can deploy them equal (cities could be multiple soldier) recursive
-                deploySoldierByEquivalent();
-            }
-            if (soldiers.size() % cities.size() > 0) {
-                // then soldiers not equal check list of deployment size's
-                deploySoldiersLogical();
-            }
+    private void deploySoldiers() {
+        if (soldiers.size() % cities.size() == soldiers.size()) {
+            // then cities number > soldiers
+            deploySoldiersRandom();
         }
+        if (soldiers.size() % cities.size() == 0) {
+            // then we can deploy them equal (cities could be multiple soldier) recursive
+            deploySoldierByEquivalent();
+        }
+        if (soldiers.size() % cities.size() > 0) {
+            // then soldiers not equal check list of deployment size's
+            deploySoldiersLogical();
+        }
+    }
 
-     private void deploySoldiersRandom () {
+    private void deploySoldiersRandom() {
         deploymentList = new ArrayList<>();
         while (0 >= soldiers.size()) {
-            int randomSoldierIndex = new Random().nextInt(soldiers.size() -1);
-            int randomCityIndex = new Random().nextInt(cities.size() -1);
-            deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()),new City(cities.get(randomCityIndex).getName()));
+            int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
+            int randomCityIndex = new Random().nextInt(cities.size() - 1);
+            deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
             deploymentList.add(deployment);
             soldiers.remove(randomSoldierIndex);
             cities.remove(randomCityIndex);
@@ -174,7 +168,7 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         }
     }
 
-    private void deploySoldierByEquivalent () {
+    private void deploySoldierByEquivalent() {
         deploymentList = new ArrayList<>();
         int loopSize = soldiers.size() / cities.size();
         int period = cities.size();
@@ -182,39 +176,37 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         List<City> tempCityList = new ArrayList<>();
 
         while (i <= period) {
-                while (0>=loopSize) {
-                    if (cities.size() == 0) {
-                        int randomSoldierIndex = new Random().nextInt(soldiers.size() -1);
-                        int randomCityIndex = new Random().nextInt(tempCityList.size() -1);
-                        cities.add(tempCityList.get(randomCityIndex));
-                        deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()),new City(tempCityList.get(randomCityIndex).getName()));
-                        deploymentList.add(deployment);
-                        cities.remove(randomSoldierIndex);
-                        tempCityList.remove(randomCityIndex);
-                        notifyAdapter();
+            while (0 >= loopSize) {
+                if (cities.size() == 0) {
+                    int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
+                    int randomCityIndex = new Random().nextInt(tempCityList.size() - 1);
+                    cities.add(tempCityList.get(randomCityIndex));
+                    deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(tempCityList.get(randomCityIndex).getName()));
+                    deploymentList.add(deployment);
+                    cities.remove(randomSoldierIndex);
+                    tempCityList.remove(randomCityIndex);
+                    notifyAdapter();
 
-                    }else {
-                        int randomSoldierIndex = new Random().nextInt(soldiers.size() -1);
-                        int randomCityIndex = new Random().nextInt(cities.size() -1);
-                        tempCityList.add(cities.get(randomCityIndex));
-                        deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()),new City(cities.get(randomCityIndex).getName()));
-                        deploymentList.add(deployment);
-                        soldiers.remove(randomSoldierIndex);
-                        cities.remove(randomCityIndex);
-                        notifyAdapter();
-                    }
-                    loopSize --;
+                } else {
+                    int randomSoldierIndex = new Random().nextInt(soldiers.size() - 1);
+                    int randomCityIndex = new Random().nextInt(cities.size() - 1);
+                    tempCityList.add(cities.get(randomCityIndex));
+                    deployment = new Deployment(new Soldier(soldiers.get(randomSoldierIndex).getName()), new City(cities.get(randomCityIndex).getName()));
+                    deploymentList.add(deployment);
+                    soldiers.remove(randomSoldierIndex);
+                    cities.remove(randomCityIndex);
+                    notifyAdapter();
                 }
-                i++;
+                loopSize--;
             }
+            i++;
+        }
     }
 
-    private void deploySoldiersLogical () {
-        deploymentList = new ArrayList<>();
-
-        while (0 >= soldiers.size()) {
-
-        }
+    private void deploySoldiersLogical() {
+        //  deploymentList = new ArrayList<>();
+        //  while (0 >= soldiers.size()) {
+        //  }
         // todo: tomorrow...
     }
 
@@ -225,16 +217,15 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     }
 
 
-
-    private void edtKeyListeners () {
+    private void edtKeyListeners() {
         edtName.setOnKeyListener((view, i, keyEvent) -> {
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 switch (i) {
                     case KeyEvent.KEYCODE_ENTER:
                         addSoldier(Objects.requireNonNull(edtName.getText()).toString());
                         break;
-                     case KeyEvent.FLAG_CANCELED_LONG_PRESS:
-                         break;
+                    case KeyEvent.FLAG_CANCELED_LONG_PRESS:
+                        break;
                 }
             }
             return false;
@@ -254,17 +245,18 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
         });
     }
 
-    private void deleteSoldier (int position) {
+    private void deleteSoldier(int position) {
         soldiers.remove(position);
         adapterSoldier.notifyDataSetChanged();
 
     }
-    private void deleteCity (int position) {
+
+    private void deleteCity(int position) {
         cities.remove(position);
         adapterCity.notifyDataSetChanged();
     }
 
-    private void deleteDeployment (int position) {
+    private void deleteDeployment(int position) {
         deploymentList.remove(position);
         adapterDeployment.notifyDataSetChanged();
     }
@@ -273,13 +265,13 @@ public class DeploymentActivity extends BaseActivity implements RecyclerViewItem
     public void onClick(RecyclerViewType type, int position) {
         switch (type) {
             case SOLDIER:
-                showDialog(type,this,DialogType.QUESTION,position,getResources().getString(R.string.tr_are_you_to_delete_soldier_message));
+                showDialog(type, this, DialogType.QUESTION, position, getResources().getString(R.string.tr_are_you_to_delete_soldier_message));
                 break;
             case CITY:
-                showDialog(type,this,DialogType.QUESTION,position,getResources().getString(R.string.tr_are_you_to_delete_city_message));
+                showDialog(type, this, DialogType.QUESTION, position, getResources().getString(R.string.tr_are_you_to_delete_city_message));
                 break;
             case DEPLOYMENT:
-                showDialog(type,this,DialogType.QUESTION,position,getResources().getString(R.string.tr_are_you_to_delete_deployment_message));
+                showDialog(type, this, DialogType.QUESTION, position, getResources().getString(R.string.tr_are_you_to_delete_deployment_message));
                 break;
         }
     }

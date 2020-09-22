@@ -10,7 +10,6 @@ import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
 import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.Soldier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -37,7 +36,7 @@ public class AdapterSoldier extends RecyclerView.Adapter<AdapterSoldier.AdapterS
     public void onBindViewHolder(@NonNull AdapterSoldierViewHolder holder, int position) {
         Soldier soldier = data.get(position);
         holder.setData(soldier);
-        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.SOLDIER,position));
+        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.SOLDIER, position));
     }
 
     @Override

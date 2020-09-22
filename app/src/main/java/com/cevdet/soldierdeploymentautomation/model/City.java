@@ -3,7 +3,7 @@ package com.cevdet.soldierdeploymentautomation.model;
 public class City {
     private String name;
 
-    public City () {
+    public City() {
 
     }
 
