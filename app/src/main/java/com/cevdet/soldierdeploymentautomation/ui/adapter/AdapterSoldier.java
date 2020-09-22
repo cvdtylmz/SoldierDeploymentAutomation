@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cevdet.soldierdeploymentautomation.R;
+import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
+import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.Soldier;
 
 import java.util.ArrayList;
@@ -17,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AdapterSoldier extends RecyclerView.Adapter<AdapterSoldier.AdapterSoldierViewHolder> {
 
     private List<Soldier> data;
+    private RecyclerViewItemClickListener listener;
 
-    public AdapterSoldier(List<Soldier> dataList) {
+    public AdapterSoldier(List<Soldier> dataList, RecyclerViewItemClickListener listener) {
         this.data = dataList;
+        this.listener = listener;
     }
 
 
@@ -33,6 +37,7 @@ public class AdapterSoldier extends RecyclerView.Adapter<AdapterSoldier.AdapterS
     public void onBindViewHolder(@NonNull AdapterSoldierViewHolder holder, int position) {
         Soldier soldier = data.get(position);
         holder.setData(soldier);
+        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.SOLDIER,position));
     }
 
     @Override

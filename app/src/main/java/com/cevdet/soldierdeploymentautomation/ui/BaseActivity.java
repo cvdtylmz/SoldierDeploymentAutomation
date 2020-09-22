@@ -3,6 +3,8 @@ package com.cevdet.soldierdeploymentautomation.ui;
 import android.os.Bundle;
 
 import com.cevdet.soldierdeploymentautomation.enums.DialogType;
+import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
+import com.cevdet.soldierdeploymentautomation.listeners.DialogCallBack;
 import com.cevdet.soldierdeploymentautomation.ui.dialog.CustomDialog;
 
 import androidx.annotation.Nullable;
@@ -23,8 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initViews();
 
-    protected void showDialog (DialogType dialogType, String message) {
-        dialog =  new CustomDialog(this, dialogType,message);
+    protected void showDialog (RecyclerViewType recyclerViewType, DialogCallBack listener,DialogType dialogType,int position, String message) {
+        dialog =  new CustomDialog(this,recyclerViewType,listener, dialogType,position,message);
         dialog.setCanceledOnTouchOutside(false);
         if (!dialog.isShowing()) dialog.show();
     }

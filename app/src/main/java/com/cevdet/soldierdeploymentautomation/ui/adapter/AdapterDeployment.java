@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cevdet.soldierdeploymentautomation.R;
+import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
+import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.Deployment;
 
 import java.util.ArrayList;
@@ -15,14 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterDeployment extends RecyclerView.Adapter<AdapterDeployment.AdapterDeploymentViewHolder> {
-    private List<Deployment> data = new ArrayList<>();
 
-    public AdapterDeployment(List<Deployment> dataList) {
-        dataList.clear();
-        if (dataList != null) {
-            this.data.addAll(dataList);
-            notifyDataSetChanged();
-        }
+    private List<Deployment> data;
+    private RecyclerViewItemClickListener listener;
+
+
+    public AdapterDeployment(List<Deployment> dataList, RecyclerViewItemClickListener listener) {
+        this.data = dataList;
+        this.listener = listener;
 
     }
 
@@ -37,6 +39,7 @@ public class AdapterDeployment extends RecyclerView.Adapter<AdapterDeployment.Ad
     public void onBindViewHolder(@NonNull AdapterDeploymentViewHolder holder, int position) {
         Deployment deployment = data.get(position);
         holder.setData(deployment);
+        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.DEPLOYMENT,position));
     }
 
     @Override

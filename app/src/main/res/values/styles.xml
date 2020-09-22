@@ -30,4 +30,18 @@
 
     </style>
 
+
+
+    <style name="btn_dialog_type" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/margin8</item>
+        <item name="android:layout_marginEnd">@dimen/margin8</item>
+        <item name="android:inset">0dp</item>
+        <item name="cornerRadius">@dimen/margin4</item>
+        <item name="backgroundTint">@color/colorPrimaryDark</item>
+
+    </style>
+
 </resources>

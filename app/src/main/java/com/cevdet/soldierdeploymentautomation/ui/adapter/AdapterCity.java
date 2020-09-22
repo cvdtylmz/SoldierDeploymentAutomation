@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cevdet.soldierdeploymentautomation.R;
+import com.cevdet.soldierdeploymentautomation.enums.RecyclerViewType;
+import com.cevdet.soldierdeploymentautomation.listeners.RecyclerViewItemClickListener;
 import com.cevdet.soldierdeploymentautomation.model.City;
 
 import java.util.ArrayList;
@@ -17,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AdapterCity extends RecyclerView.Adapter<AdapterCity.AdapterCityViewHolder> {
 
     private List<City> data;
+    private RecyclerViewItemClickListener listener;
 
-    public AdapterCity(List<City> dataList) {
+    public AdapterCity(List<City> dataList, RecyclerViewItemClickListener listener) {
+        this.listener = listener;
         this.data = dataList;
 
     }
@@ -34,6 +38,7 @@ public class AdapterCity extends RecyclerView.Adapter<AdapterCity.AdapterCityVie
     public void onBindViewHolder(@NonNull AdapterCityViewHolder holder, int position) {
         City city = data.get(position);
         holder.setData(city);
+        holder.itemView.setOnClickListener(view -> listener.onClick(RecyclerViewType.CITY,position));
     }
 
     @Override

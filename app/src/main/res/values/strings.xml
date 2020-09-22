@@ -11,4 +11,10 @@
     <string name="tr_adding_soldier_success_message">Asker ekleme başarılı!</string>
     <string name="tr_adding_city_success_message">Şehir ekleme işlemi başarılı!</string>
     <string name="tr_empty_list_deployment_error_message">Boş dağıtım yapılamaz!</string>
+    <string name="tr_general_no">Hayır</string>
+    <string name="tr_general_yes">Evet</string>
+    <string name="tr_are_you_to_delete_message">Silmek istediğinize emin misiniz?</string>
+    <string name="tr_are_you_to_delete_soldier_message">İlgili Askeri silmek istediğinize emin misiniz?</string>
+    <string name="tr_are_you_to_delete_city_message">İlgili Şehri silmek istediğinize emin misiniz?</string>
+    <string name="tr_are_you_to_delete_deployment_message">İlgili Dağıtımı silmek istediğinize emin misiniz?</string>
 </resources>

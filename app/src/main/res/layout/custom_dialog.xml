@@ -27,10 +27,26 @@
         android:textStyle="bold"
         />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog"
-        style="@style/btn_row_type"
-        android:text="OK"
-        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_negative"
+            style="@style/btn_dialog_type"
+            android:text="@string/tr_general_no"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_positive"
+            style="@style/btn_dialog_type"
+            android:text="@string/tr_general_yes"
+            />
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
